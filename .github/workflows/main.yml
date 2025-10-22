@@ -58,13 +58,14 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
       - name: Update Deployment tag
         run: |
-          echo "Reemplazando {{ tag }} con ${{ github.run_number }}"
-          sed -i "s|{{ tag }}|${{ github.run_number }}|g" oc.yaml
-          cat oc.yaml
+          echo "Reemplazando {{ tag }} con ${{ github.run_number }} en ocsecurity.yaml"
+          sed -i "s|{{ tag }}|${{ github.run_number }}|g" ocsecurity.yaml
+          cat ocsecurity.yaml
+          
 
-      - name: Deply files
+      - name: Deploy files
         run: |
           oc project stnvivanco92-dev
-          oc apply -f oc.yaml
+          oc apply -f ocsecurity.yaml
           oc rollout status deployment/mi-app-deployment
           
